@@ -1,18 +1,27 @@
-import time
-
-from selenium import webdriver
-
+import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from  selenium.webdriver.common.action_chains import ActionChains
+
+from data import Url
+from locators.base_locators import BasePageLocators
 
 class BasePage:
-    def __init__(self, driver):
+    def __init__(self, driver, url_path=''):
         self.driver = driver
+        url = Url.MAIN_PAGE
+        self.url = url + url_path
 
-    def navigate(self, url='https://qa-scooter.praktikum-services.ru/'):
+    def open_page(self):
+        url = self.url
         self.driver.get(url)
+
+
+    @allure.step('Текущий URL')
+    def get_url(self):
+        return self.driver.current_url
+
+    def accept_cookies(self):
+        return self.click_to_element(BasePageLocators.ACCEPT_COOKIES)
 
     def find_element_with_wait(self, locator, timeout=10):
         WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
@@ -35,23 +44,14 @@ class BasePage:
         return method, format_locator
 
 
+    def switch_tab(self, locator):
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(locator))
+
+
 
     def scroll_to_element(self, locator):
         element = self.find_element_with_wait(locator)
         print(element)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-
-
-    def find_some_elements(self, locator, timeout=10):
-        try:
-            return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located(locator))
-        except TimeoutException:
-            print(f'Elements with locator {locator} not found within {timeout}')
-            return None
-
-
-    def put_cursor(self, element):
-        action = ActionChains(driver=self.driver)
-        element = action.move_to_element(element)
-        return element
 

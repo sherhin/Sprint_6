@@ -1,3 +1,31 @@
+from datetime import datetime, timedelta
+
+
+class Url:
+    ORDER_PATH = 'order'
+    MAIN_PAGE = 'https://qa-scooter.praktikum-services.ru/'
+    DZEN_PAGE = 'https://dzen.ru/'
+
+
+class User1:
+    name = 'Джон'
+    surname = 'Доу'
+    address = 'Москва, Старый Арбат, 4'
+    underground = 'Арбатская'
+    number = '79100000000'
+    date = (datetime.now() + timedelta(days=364)).strftime('%d-%m-%Y')
+    comment = 'Тут медведь'
+
+
+class User2:
+    name = 'Джейн'
+    surname = 'Доу'
+    address = 'Тверская, 1'
+    underground = 'Тверская'
+    number = '+79251111111'
+    date = (datetime.now() + timedelta(days=1)).strftime('%d-%m-%Y')
+    comment = 'Входа нет'
+
 FAQ = {
     0: [
         'Сколько это стоит? И как оплатить?',
