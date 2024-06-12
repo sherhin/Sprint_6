@@ -4,7 +4,7 @@ from data import *
 
 @allure.story('Тесты переходов по логотипу Яндекс/Самокат')
 class TestLogoTransition:
-    @allure.title('Тест перехода со страницы заказа на главую по клику на логотип "Самокат"')
+    @allure.title('Тест перехода со страницы заказа на главную по клику на логотип "Самокат"')
     def test_logo_scooter(self, driver, order_page):
         order_page.open_page()
         order_page.click_on_yandex_logo()
